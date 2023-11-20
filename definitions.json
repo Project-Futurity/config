@@ -1,0 +1,133 @@
+{
+  "users": [
+    {
+      "name": "alex",
+      "password_hash": "M5ZfZ5yxLQO1ihYxk/J+9DrrJhiaqLLnkd3hcBFiXWKwWvUY",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator",
+      "limits": {}
+    }
+  ],
+  "permissions": [
+    {
+      "user": "alex",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "task",
+      "vhost": "/",
+      "type": "direct",
+      "auto_delete": false,
+      "durable": true,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "notification",
+      "vhost": "/",
+      "type": "direct",
+      "auto_delete": false,
+      "internal": false,
+      "durable": true,
+      "arguments": {}
+    },
+    {
+      "name": "user",
+      "vhost": "/",
+      "type": "direct",
+      "auto_delete": false,
+      "internal": false,
+      "durable": true,
+      "arguments": {}
+    }
+  ],
+  "queues": [
+    {
+      "name": "task.created",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "task.updated",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "task.deleted",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "task.notification",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "user.telegram",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "task",
+      "vhost": "/",
+      "destination": "task.created",
+      "destination_type": "queue",
+      "routing_key": "created",
+      "arguments": {}
+    },
+    {
+      "source": "task",
+      "vhost": "/",
+      "destination": "task.updated",
+      "destination_type": "queue",
+      "routing_key": "updated",
+      "arguments": {}
+    },
+    {
+      "source": "task",
+      "vhost": "/",
+      "destination": "task.deleted",
+      "destination_type": "queue",
+      "routing_key": "deleted",
+      "arguments": {}
+    },
+    {
+      "source": "user",
+      "vhost": "/",
+      "destination": "user.telegram",
+      "destination_type": "queue",
+      "routing_key": "updated",
+      "arguments": {}
+    },
+    {
+      "source": "notification",
+      "vhost": "/",
+      "destination": "task.notification",
+      "destination_type": "queue",
+      "routing_key": "notification",
+      "arguments": {}
+    }
+  ]
+}

@@ -76,7 +76,7 @@ services:
       - "./keys:/secrets/"
     env_file:
       - prod.env
-  telegram-bot:
+  futurity-telegram-bot:
     build:
       context: ./futurity-telegram-bot
     container_name: futurity-telegram-bot
@@ -87,6 +87,7 @@ services:
       - prod.env
   rabbit:
     image: rabbitmq:3.12-management
+    container_name: rabbit
     ports:
       - "5672:5672"
       - "15672:15672"

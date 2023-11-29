@@ -6,7 +6,7 @@ services:
     container_name: postgres
     restart: always
     volumes:
-      - "./futurity/postgres:/var/lib/postgresql/data"
+      - "~/futurity/postgres:/var/lib/postgresql/data"
     env_file:
       - prod.env
   nginx:
@@ -17,8 +17,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - "./certbot/www:/var/www/certbot/"
-      - "./certbot/conf/:/etc/nginx/ssl/"
+      - "~/futurity/certbot/www:/var/www/certbot/"
+      - "~/futurity/certbot/conf/:/etc/nginx/ssl/"
     env_file:
       - prod.env
   user-service:
@@ -26,7 +26,7 @@ services:
       context: ./user-service
     container_name: user-service
     volumes:
-      - "./maven-rep:/root/.m2"
+      - "~/futurity/maven-rep:/root/.m2"
     env_file:
       - prod.env
   project-service:
@@ -34,7 +34,7 @@ services:
       context: ./project-service
     container_name: project-service
     volumes:
-      - "./maven-rep:/root/.m2"
+      - "~/futurity/maven-rep:/root/.m2"
     env_file:
       - prod.env
   notification-service:
@@ -48,8 +48,8 @@ services:
       context: ./auth-service
     container_name: auth-service
     volumes:
-      - "./maven-rep:/root/.m2"
-      - "./keys:/secrets/"
+      - "~/futurity/maven-rep:/root/.m2"
+      - "~/futurity/keys:/secrets/"
     env_file:
       - prod.env
   api-gateway:
@@ -57,8 +57,8 @@ services:
       context: ./api-gateway-service
     container_name: api-gateway
     volumes:
-      - "./maven-rep:/root/.m2"
-      - "./keys:/secrets/"
+      - "~/futurity/maven-rep:/root/.m2"
+      - "~/futurity/keys:/secrets/"
     env_file:
       - prod.env
   futurity-telegram-bot:
@@ -76,7 +76,7 @@ services:
     volumes:
       - "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config"
       - "./definitions.json:/etc/rabbitmq/definitions.json"
-      - "./futurity/rabbit:/var/lib/rabbitmq"
+      - "~/futurity/rabbit:/var/lib/rabbitmq"
 
   # enable this when you need to generate new certificate:
   # docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d example.org

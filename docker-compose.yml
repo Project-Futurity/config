@@ -19,17 +19,12 @@ services:
     volumes:
       - "./certbot/www:/var/www/certbot/"
       - "./certbot/conf/:/etc/nginx/ssl/"
-    depends_on:
-      - api-gateway
     env_file:
       - prod.env
   user-service:
     build:
       context: ./user-service
     container_name: user-service
-    depends_on:
-      - postgres
-      - rabbit
     volumes:
       - "./maven-rep:/root/.m2"
     env_file:
@@ -38,9 +33,6 @@ services:
     build:
       context: ./project-service
     container_name: project-service
-    depends_on:
-      - postgres
-      - rabbit
     volumes:
       - "./maven-rep:/root/.m2"
     env_file:
@@ -49,17 +41,12 @@ services:
     build:
       context: ./notification-service
     container_name: notification-service
-    depends_on:
-      - postgres
-      - rabbit
     env_file:
       - prod.env
   auth-service:
     build:
       context: ./auth-service
     container_name: auth-service
-    depends_on:
-      - postgres
     volumes:
       - "./maven-rep:/root/.m2"
       - "./keys:/secrets/"
@@ -69,8 +56,6 @@ services:
     build:
       context: ./api-gateway-service
     container_name: api-gateway
-    depends_on:
-      - postgres
     volumes:
       - "./maven-rep:/root/.m2"
       - "./keys:/secrets/"
@@ -80,9 +65,6 @@ services:
     build:
       context: ./futurity-telegram-bot
     container_name: futurity-telegram-bot
-    depends_on:
-      - postgres
-      - rabbit
     env_file:
       - prod.env
   rabbit:
